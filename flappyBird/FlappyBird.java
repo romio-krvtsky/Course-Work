@@ -1,7 +1,9 @@
 package flappyBird;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,13 +11,16 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JFrame;
+import javax.swing.Timer;
+
 public class FlappyBird implements ActionListener, KeyListener {
 
     public static FlappyBird flappyBird;
 
     public final int WIDTH = 750, HEIGHT = 750;
 
-    public Rendererr renderer;
+    public Renderer1 renderer;
 
     public Rectangle fakeBird;
 
@@ -36,7 +41,7 @@ public class FlappyBird implements ActionListener, KeyListener {
         JFrame jframe = new JFrame();
         Timer timer = new Timer(20, this);
 
-        renderer = new Rendererr();
+        renderer = new Renderer1();
         rand = new Random();
 
         jframe.add(renderer);
@@ -47,13 +52,11 @@ public class FlappyBird implements ActionListener, KeyListener {
         jframe.setResizable(false);
         jframe.setVisible(true);
 
-        fakeBird = new Rectangle(WIDTH / 2 , HEIGHT / 2, 30, 30);
+        fakeBird = new Rectangle(WIDTH / 2, HEIGHT / 2, 40, 40);
         bird = new Bird();
 
         columns = new ArrayList<Rectangle>();
 
-        addColumn(true);
-        addColumn(true);
         addColumn(true);
         addColumn(true);
 
@@ -82,14 +85,12 @@ public class FlappyBird implements ActionListener, KeyListener {
     public void jump() {
         if (gameOver) {
 
-            fakeBird = new Rectangle(WIDTH / 2 , HEIGHT / 2 , 40, 40);
+            fakeBird = new Rectangle(WIDTH / 2, HEIGHT / 2, 40, 40);
             bird = new Bird();
             columns.clear();
             yMotion = 0;
             score = 0;
 
-            addColumn(true);
-            addColumn(true);
             addColumn(true);
             addColumn(true);
 
@@ -110,7 +111,6 @@ public class FlappyBird implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         int speed = 10;
-
         ticks++;
 
         if (started) {
@@ -141,10 +141,10 @@ public class FlappyBird implements ActionListener, KeyListener {
 
             for (Rectangle column : columns) {
                 if (column.y == 0 && bird.x + bird.width / 2 > column.x + column.width / 2 - 10 && bird.x + bird.width / 2 < column.x + column.width / 2 + 10) {
-                    if(gameOver){
+                    if (gameOver) {
                         break;
-                    }else
-                        score+=0.5;
+                    }
+                    score += 0.5;
                 }
 
                 if (column.intersects(fakeBird)) {
@@ -189,8 +189,8 @@ public class FlappyBird implements ActionListener, KeyListener {
 
         g.setColor(Color.red);
         //g.fillRect(fakeBird.x, fakeBird.y, fakeBird.width, fakeBird.height);
-        bird.update(g);
-
+        if (!gameOver)
+            bird.update(g);
 
         for (Rectangle column : columns) {
             paintColumn(g, column);
@@ -205,12 +205,12 @@ public class FlappyBird implements ActionListener, KeyListener {
 
         if (gameOver) {
             g.drawString("Game Over!", 100, HEIGHT / 2 - 50);
-            g.drawString("Score: "+score, 150, HEIGHT / 2 + 75);
+            g.drawString("Score: " + (int)score, 200, HEIGHT / 2 + 75);
 
         }
 
         if (!gameOver && started) {
-            g.drawString(String.valueOf(score), WIDTH / 2 - 25, 100);
+            g.drawString(String.valueOf((int)score), WIDTH / 2 - 25, 100);
         }
 
     }
@@ -219,7 +219,6 @@ public class FlappyBird implements ActionListener, KeyListener {
         flappyBird = new FlappyBird();
     }
 
-    @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             jump();
@@ -229,12 +228,10 @@ public class FlappyBird implements ActionListener, KeyListener {
         }
     }
 
-    @Override
     public void keyTyped(KeyEvent e) {
 
     }
 
-    @Override
     public void keyPressed(KeyEvent e) {
 
     }

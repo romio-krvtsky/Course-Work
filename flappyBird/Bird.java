@@ -17,7 +17,7 @@ public class Bird
         width = 40;
         height = 40;
         try {
-            img = ImageIO.read(new File("src/bird.png"));
+            img = ImageIO.read(new File("src/flappyBird/bird.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
