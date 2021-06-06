@@ -37,9 +37,8 @@ public class FlappyBird implements ActionListener, KeyListener {
     public Random rand;
 
     public FlappyBird() {
-
         JFrame jframe = new JFrame();
-        Timer timer = new Timer(20, this);
+        Timer timer = new Timer(17, this);
 
         renderer = new Renderer1();
         rand = new Random();
@@ -59,7 +58,6 @@ public class FlappyBird implements ActionListener, KeyListener {
 
         addColumn(true);
         addColumn(true);
-
         timer.start();
     }
 
@@ -96,7 +94,6 @@ public class FlappyBird implements ActionListener, KeyListener {
 
             gameOver = false;
         }
-
         if (!started) {
             started = true;
         } else if (!gameOver) {
@@ -108,7 +105,6 @@ public class FlappyBird implements ActionListener, KeyListener {
         }
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         int speed = 10;
         ticks++;
@@ -116,7 +112,6 @@ public class FlappyBird implements ActionListener, KeyListener {
         if (started) {
             for (int i = 0; i < columns.size(); i++) {
                 Rectangle column = columns.get(i);
-
                 column.x -= speed;
             }
 
@@ -189,7 +184,7 @@ public class FlappyBird implements ActionListener, KeyListener {
 
         g.setColor(Color.red);
         //g.fillRect(fakeBird.x, fakeBird.y, fakeBird.width, fakeBird.height);
-        if (!gameOver)
+        if (!gameOver && started)
             bird.update(g);
 
         for (Rectangle column : columns) {
@@ -197,7 +192,7 @@ public class FlappyBird implements ActionListener, KeyListener {
         }
 
         g.setColor(Color.white);
-        g.setFont(new Font("Arial", 1, 100));
+        g.setFont(new Font("Arial", 3, 100));
 
         if (!started) {
             g.drawString("Click to start!", 75, HEIGHT / 2 - 50);
@@ -215,10 +210,6 @@ public class FlappyBird implements ActionListener, KeyListener {
 
     }
 
-    public static void main(String[] args) {
-        flappyBird = new FlappyBird();
-    }
-
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             jump();
@@ -234,5 +225,9 @@ public class FlappyBird implements ActionListener, KeyListener {
 
     public void keyPressed(KeyEvent e) {
 
+    }
+
+    public static void main(String[] args) {
+        flappyBird = new FlappyBird();
     }
 }

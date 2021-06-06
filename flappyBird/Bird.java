@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 public class Bird
 {
     public int x, y, width, height;
-    public static final int WIDTH = 750, HEIGHT = 750;
+    public static int WIDTH = 750, HEIGHT = 750;
     private Image img;
     public Bird() {
         x = WIDTH / 2;

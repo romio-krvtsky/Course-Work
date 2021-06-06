@@ -2,7 +2,6 @@ package flappyBird;
 
 import java.awt.Graphics;
 import javax.swing.JPanel;
-
 public class Renderer1 extends JPanel
 {
     @Override
@@ -10,5 +9,4 @@ public class Renderer1 extends JPanel
     {
         FlappyBird.flappyBird.repaint(g);
     }
-
 }
